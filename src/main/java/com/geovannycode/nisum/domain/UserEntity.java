@@ -60,9 +60,12 @@ public class UserEntity {
 
     public UserEntity() {}
 
-    public UserEntity(String name, String email) {
+    public UserEntity(String name, String email, String password, Set<PhoneEntity> phones, Role role) {
         this.name = name;
         this.email = email;
+        this.password = password;
+        this.phones = phones;
+        this.role = role;
     }
 
     public UUID getId() {

@@ -36,7 +36,7 @@ public class UserController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CreateUserResponse<List<UserDTO>>> getAll() {
-        log.info("Fetching all users");
+        log.info("Recuperando a todos los usuarios");
         CreateUserResponse<List<UserDTO>> response = new CreateUserResponse<>();
         response.setBody(userService.getAll());
         response.setMessage("Lista de usuarios obtenida correctamente");
@@ -46,13 +46,13 @@ public class UserController {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
-        log.info("Creating user: {}", request);
+        log.info("Creación de usuario: {}", request);
         return new ResponseEntity<>(userService.createUser(request, request.role()), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<CreateUserResponse<TokenBodyResponse>> authenticate(@RequestBody CreateUserRequest request) {
-        log.info("Authenticating user: {}", request);
+        log.info("Autenticación de usuario : {}", request);
         CreateUserResponse<TokenBodyResponse> response = new CreateUserResponse<>();
         String token = userService.authenticate(request);
         response.setBody(new TokenBodyResponse(token));

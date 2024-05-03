@@ -6,7 +6,7 @@ import java.util.Set;
 
 public record CreateUserRequest(
         String name,
-        @NotBlank(message = "User email is required") @Email String email,
-        @NotBlank(message = "User password is required") String password,
+        @NotBlank(message = "Se requiere el correo electrónico del usuario") @Email String email,
+        @NotBlank(message = "Se requiere contraseña de usuario") String password,
         Set<PhoneDTO> phones,
         Role role) {}

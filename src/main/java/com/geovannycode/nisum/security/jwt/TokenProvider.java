@@ -70,7 +70,7 @@ public class TokenProvider {
             jwtParser.parseClaimsJws(token);
             return true;
         } catch (JwtException e) {
-            log.error("Token validation error {}", e.getMessage());
+            log.error("Error Token Validación {}", e.getMessage());
         }
         return false;
     }

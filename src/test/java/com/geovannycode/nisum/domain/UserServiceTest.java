@@ -1,28 +1,25 @@
 package com.geovannycode.nisum.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 
-import com.geovannycode.nisum.domain.model.CreateUserRequest;
-import com.geovannycode.nisum.domain.model.CreateUserResponse;
-import com.geovannycode.nisum.domain.model.PhoneDTO;
 import com.geovannycode.nisum.domain.model.Role;
+import com.geovannycode.nisum.domain.model.UserDTO;
 import com.geovannycode.nisum.security.jwt.TokenProvider;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,39 +34,39 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private TokenProvider tokenProvider;
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Mock
-    private Environment env;
+    private TokenProvider tokenProvider;
+
+    private UserEntity USER_1;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+
+        Set<PhoneEntity> PHONE_1 = new HashSet<>();
+        PHONE_1.add(new PhoneEntity("123456789", "08", "20"));
+
+        USER_1 = new UserEntity("Geovanny Mendoza", "geovanny.mendoza@gmail.com", "Password123!", PHONE_1, Role.USER);
+
+        assertNotNull(USER_1, "USER_1 should not be null");
+        assertNotNull(PHONE_1, "PHONE_1 should not be null");
+
+        List<UserEntity> users = Arrays.asList(USER_1);
+        Mockito.when(userRepository.findAll()).thenReturn(users);
+
+        userService = new UserService(userRepository, passwordEncoder, authenticationManagerBuilder, tokenProvider);
     }
 
     @Test
-    public void testCreateUserSuccess() throws Exception {
-        Set<PhoneDTO> phones = new HashSet<>();
-        phones.add(new PhoneDTO("123456789", "08", "20"));
+    public void readAllTest() throws Exception {
+        UserDTO userDTO = UserMapper.convertToDTO(USER_1);
+        List<UserDTO> response = userService.getAll();
 
-        CreateUserRequest userRequest =
-                new CreateUserRequest("Geovanny Mendoza", "me@example.com", "Password123!", phones, Role.USER);
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(passwordEncoder.encode("Password123!")).thenReturn("encodedPassword");
-        when(tokenProvider.createToken(any())).thenReturn("dummyToken");
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(UUID.randomUUID());
-        userEntity.setName(userRequest.name());
-        userEntity.setEmail(userRequest.email());
-        userEntity.setPassword("Password123!");
-        userEntity.setToken("dummyToken");
-        userEntity.setRole(userRequest.role());
-        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
-
-        when(env.getProperty("app.regex.password")).thenReturn("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{7,}$");
-
-        CreateUserResponse response = userService.createUser(userRequest, userRequest.role());
         assertNotNull(response);
-        assertEquals("Usuario creado satisfactoriamente.", response.getMessage());
+        assertFalse(response.isEmpty());
+        assertEquals(response.size(), 1);
+        assertEquals(USER_1.getEmail(), userDTO.email());
     }
 }

@@ -65,13 +65,13 @@ public class UserService {
             newUser.setToken(token);
             newUser.setRole(role);
             UserEntity savedUser = userRepository.save(newUser);
-            log.info("Created User with id={}", savedUser.getId());
+            log.info("Creación de Usuario con id={}", savedUser.getId());
             return buildSuccessResponse(savedUser);
         } catch (EmailAlreadyExistsException | InvalidPasswordFormatException ex) {
-            log.error("Validation error: {}", ex.getMessage());
+            log.error("Validación de Error: {}", ex.getMessage());
             throw ex;
         } catch (Exception ex) {
-            log.error("Unexpected error during user registration", ex);
+            log.error("Error inesperado durante el registro de usuario", ex);
             throw new UserRegistrationException("Error al registrar al usuario", ex);
         }
     }

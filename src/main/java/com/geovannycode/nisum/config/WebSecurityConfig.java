@@ -2,6 +2,7 @@ package com.geovannycode.nisum.config;
 
 import com.geovannycode.nisum.security.jwt.JWTConfigurer;
 import com.geovannycode.nisum.security.jwt.TokenProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -14,6 +15,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class WebSecurityConfig {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration}")
+    private Long expiration;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         JWTConfigurer jwtConfigurer = new JWTConfigurer(tokenProvider());
@@ -32,6 +40,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/users/**")
                         .authenticated())
                 .sessionManagement(h -> h.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers.permissionsPolicy(policy -> policy.policy("frame-src 'self'")))
                 .apply(jwtConfigurer);
         return http.build();
     }
@@ -43,8 +52,6 @@ public class WebSecurityConfig {
 
     @Bean
     public TokenProvider tokenProvider() {
-        return new TokenProvider(
-                "chLhMF9w3mwDutysbQxsX8x4CGwZef4mayTGSmbAG2BUsXbYFKvXrVfnPCa62PJxp9TuHxx4PQAS2yGUTBAPy3Dy53j8Uj2wb2AQ3nK8VLg7tUx9HCzHATEp",
-                2592000L);
+        return new TokenProvider(secret, expiration);
     }
 }
