@@ -22,10 +22,14 @@ El proyecto está organizado utilizando una estructura de paquetes por component
 * **[Taskfile.dev:](https://taskfile.dev/)** Herramienta de automatización que se emplea para definir y ejecutar tareas de desarrollo, como compilaciones y ejecución de pruebas.
 
 ## Patrones de Diseño Implementados
-**Adapter**: Implementado para convertir interfaces de algunas bibliotecas externas utilizadas en el proyecto, permitiendo que sean compatibles con nuestras propias interfaces.
-**Dependency Injection**: Utilizado ampliamente gracias a Spring Framework, facilitando la gestión de dependencias y la configuración del proyecto.
-**Repository**: Aplicado a través de Spring Data JPA para abstraer la lógica de acceso a datos y simplificar las operaciones con la base de datos.
-**Factory**: Empleado para la creación de objetos complejos, permitiendo una mayor flexibilidad y desacoplamiento en la creación de instancias.
+* **Dependency Injection**: Ampliamente utilizado a través de Spring Framework, este patrón facilita la gestión de dependencias y la configuración del proyecto, promoviendo un código más limpio y mantenible.
+* **Repository**: Implementado mediante Spring Data JPA para abstraer la lógica de acceso a datos. Esto simplifica las operaciones con la base de datos y mejora la mantenibilidad del código al separar la lógica de negocio de la de persistencia
+* **Factory**: Empleado para la creación de objetos complejos. Este patrón permite una mayor flexibilidad y desacoplamiento en la creación de instancias, facilitando la extensión y el mantenimiento del código..
+* **Singleton**: Utilizado para garantizar que una clase tenga una única instancia y proporcionar un punto de acceso global a ella. En este proyecto, AuthenticationManagerBuilder se configura como un singleton, asegurando que solo exista una instancia de este componente en la aplicación
+
+## Principios SOLID
+* **Principio de Responsabilidad Única (SRP)**: Cada clase se ha diseñado para tener una sola razón para cambiar, lo cual se logra segregando las funcionalidades en distintos servicios y repositorios, minimizando así las dependencias cruzadas.
+* **Principio de Inversión de Dependencias (DIP)**: Se ha aplicado este principio para reducir la dependencia de implementaciones concretas y fomentar la dependencia de abstracciones. Esto se observa en cómo las capas superiores de la aplicación interactúan con interfaces en lugar de con implementaciones concretas, lo que facilita la sustitución de componentes y la realización de pruebas.
 
 ## Ejecutar Proyecto
 Para poner en funcionamiento el proyecto API-Nisum, siga los pasos detallados a continuación. Asegúrese de tener instalado Java en su máquina, así como las herramientas necesarias como Git y Maven o Task, dependiendo del método de ejecución que prefiera.
