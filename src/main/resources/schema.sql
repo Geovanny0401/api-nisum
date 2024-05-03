@@ -10,7 +10,8 @@ CREATE TABLE users (
                       modified TIMESTAMP,
                       last_login TIMESTAMP NOT NULL,
                       token VARCHAR(255),
-                      is_active BOOLEAN
+                      is_active BOOLEAN,
+                      role varchar(255)
 );
 
 CREATE TABLE phones (

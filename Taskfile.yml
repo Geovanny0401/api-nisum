@@ -1,0 +1,23 @@
+version: '3'
+
+vars:
+  GOOS: "{{default OS .GOOS}}"
+  MVN: 'mvn'
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  format:
+    cmds:
+      - "{{.MVN}} spotless:apply"
+
+  run_app:
+    cmds:
+      - "{{.MVN}} spring-boot:run"
+
+  test:
+    deps: [format]
+    cmds:
+      - "{{.MVN}} clean verify"

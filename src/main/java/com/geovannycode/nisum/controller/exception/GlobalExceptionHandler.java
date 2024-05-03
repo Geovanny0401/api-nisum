@@ -2,6 +2,8 @@ package com.geovannycode.nisum.controller.exception;
 
 import com.geovannycode.nisum.domain.EmailAlreadyExistsException;
 import com.geovannycode.nisum.domain.InvalidPasswordFormatException;
+import com.geovannycode.nisum.domain.ResourceNotFoundException;
+import com.geovannycode.nisum.domain.UserRegistrationException;
 import com.geovannycode.nisum.domain.UserRetrievalException;
 import com.geovannycode.nisum.domain.model.ApiError;
 import com.geovannycode.nisum.domain.model.CreateUserResponse;
@@ -9,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,6 +54,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(buildResponseException(ex, ex.getMessage()), ex.getStatusCode());
     }
 
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    public ResponseEntity<CreateUserResponse<Object>> handleAccessDeniedException(AccessDeniedException ex) {
+        return new ResponseEntity<>(buildResponseException(ex, "Acceso denegado"), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<CreateUserResponse<Object>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(buildResponseException(ex), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserRegistrationException.class)
+    public ResponseEntity<CreateUserResponse<Object>> handleResourceNotFoundException(UserRegistrationException ex) {
+        return new ResponseEntity<>(buildResponseException(ex), HttpStatus.FORBIDDEN);
+    }
+
     private CreateUserResponse<Object> buildResponseException(Throwable throwable, String message) {
         CreateUserResponse<Object> response = new CreateUserResponse<>();
         ApiError error = new ApiError();
@@ -80,6 +98,18 @@ public class GlobalExceptionHandler {
     }
 
     private CreateUserResponse<Object> buildResponseException(EmailAlreadyExistsException ex) {
+        CreateUserResponse<Object> response = new CreateUserResponse<>();
+        response.setMessage(ex.getMessage());
+        return response;
+    }
+
+    private CreateUserResponse<Object> buildResponseException(ResourceNotFoundException ex) {
+        CreateUserResponse<Object> response = new CreateUserResponse<>();
+        response.setMessage(ex.getMessage());
+        return response;
+    }
+
+    private CreateUserResponse<Object> buildResponseException(UserRegistrationException ex) {
         CreateUserResponse<Object> response = new CreateUserResponse<>();
         response.setMessage(ex.getMessage());
         return response;

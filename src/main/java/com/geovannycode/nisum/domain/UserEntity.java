@@ -1,8 +1,11 @@
 package com.geovannycode.nisum.domain;
 
+import com.geovannycode.nisum.domain.model.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -51,6 +54,16 @@ public class UserEntity {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public UserEntity() {}
+
+    public UserEntity(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     public UUID getId() {
         return id;
@@ -130,5 +143,13 @@ public class UserEntity {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

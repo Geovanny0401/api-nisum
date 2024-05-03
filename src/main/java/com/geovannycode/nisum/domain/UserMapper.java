@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     static UserDTO convertToDTO(UserEntity user) {
+        if (user == null) {
+            return null;
+        }
+
         Set<PhoneDTO> phoneItems = user.getPhones().stream()
                 .map(phone -> new PhoneDTO(phone.getNumber(), phone.getCityCode(), phone.getCountryCode()))
                 .collect(Collectors.toSet());
@@ -23,10 +27,10 @@ public class UserMapper {
                 user.getEmail(),
                 user.getPassword(),
                 phoneItems,
+                user.getToken(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 user.getLastLogin(),
-                user.getToken(),
                 user.isActive());
     }
 
@@ -49,6 +53,7 @@ public class UserMapper {
         newUser.setCreatedAt(now);
         newUser.setLastLogin(now);
         newUser.setActive(true);
+        newUser.setRole(request.role());
         return newUser;
     }
 }
