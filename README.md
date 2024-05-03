@@ -174,6 +174,12 @@ curl --request GET \
 ### Administración de Usuarios
 * **Consulta de Información**: Los usuarios pueden consultar y actualizar su información personal después de autenticarse.
 
+## Demostración de la API
+
+Esta animación muestra el funcionamiento en vivo de nuestra API, destacando cómo los usuarios pueden registrarse, crear sus perfiles y consultar su información de manera segura y eficiente.
+
+![Ejemplo](https://github.com/Geovanny0401/test-git-action/blob/main/video_nisum.gif)
+
 ## Pruebas Implementadas
 Se desarrollaron pruebas unitarias para validar la funcionalidad y robustez del servicio. Las pruebas unitarias se centraron en componentes individuales.
 
