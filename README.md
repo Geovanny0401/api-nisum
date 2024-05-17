@@ -64,10 +64,6 @@ Si prefiere usar `Taskfile.dev` para la ejecución del proyecto, lo cual puede i
 ```
 Este comando activará las definiciones especificadas en Taskfile.yml, que pueden incluir no solo la ejecución de la aplicación sino también la ejecución de pruebas y otras tareas preconfiguradas.
 
-## Diseño del Sistema
-### Arquitectura "Package by Component"
-La arquitectura "Package by Component" es una estrategia de organización de código fuente en la que se agrupan las clases y otros recursos según su funcionalidad específica o componente, en lugar de por capas (como modelo, vista, controlador). En este proyecto, se adoptó este enfoque para mejorar la modularidad y la mantenibilidad del código. A continuación, se describen las ventajas de esta estructura:
-
 ## Diagrama de Secuencia 
 
 ```mermaid
