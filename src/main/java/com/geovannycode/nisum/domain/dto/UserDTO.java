@@ -1,4 +1,4 @@
-package com.geovannycode.nisum.domain.model;
+package com.geovannycode.nisum.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;

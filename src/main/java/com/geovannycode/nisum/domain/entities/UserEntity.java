@@ -1,6 +1,6 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.domain.entities;
 
-import com.geovannycode.nisum.domain.model.Role;
+import com.geovannycode.nisum.domain.enums.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
@@ -58,13 +59,16 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public UserEntity() {}
+    public UserEntity() {
+        this.phones = new HashSet<>();
+    }
 
     public UserEntity(String name, String email, String password, Set<PhoneEntity> phones, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.phones = phones;
+        // this.phones = phones;
+        this.phones = (phones == null ? new HashSet<>() : phones);
         this.role = role;
     }
 

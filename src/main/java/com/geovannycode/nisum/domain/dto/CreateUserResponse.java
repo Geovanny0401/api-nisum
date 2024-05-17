@@ -1,6 +1,7 @@
-package com.geovannycode.nisum.domain.model;
+package com.geovannycode.nisum.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.geovannycode.nisum.domain.model.ApiError;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateUserResponse<T> {

@@ -1,4 +1,4 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.domain.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,8 +1,10 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.domain.mapper;
 
-import com.geovannycode.nisum.domain.model.CreateUserRequest;
-import com.geovannycode.nisum.domain.model.PhoneDTO;
-import com.geovannycode.nisum.domain.model.UserDTO;
+import com.geovannycode.nisum.domain.dto.CreateUserRequest;
+import com.geovannycode.nisum.domain.dto.PhoneDTO;
+import com.geovannycode.nisum.domain.dto.UserDTO;
+import com.geovannycode.nisum.domain.entities.PhoneEntity;
+import com.geovannycode.nisum.domain.entities.UserEntity;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    static UserDTO convertToDTO(UserEntity user) {
+    public static UserDTO convertToDTO(UserEntity user) {
         if (user == null) {
             return null;
         }
@@ -34,7 +36,7 @@ public class UserMapper {
                 user.isActive());
     }
 
-    static UserEntity convertToEntity(CreateUserRequest request) {
+    public static UserEntity convertToEntity(CreateUserRequest request) {
         UserEntity newUser = new UserEntity();
         newUser.setName(request.name());
         newUser.setEmail(request.email());

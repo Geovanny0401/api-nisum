@@ -1,4 +1,4 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.exception;
 
 public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException(String message) {

@@ -1,12 +1,7 @@
-package com.geovannycode.nisum.controller.exception;
+package com.geovannycode.nisum.exception;
 
-import com.geovannycode.nisum.domain.EmailAlreadyExistsException;
-import com.geovannycode.nisum.domain.InvalidPasswordFormatException;
-import com.geovannycode.nisum.domain.ResourceNotFoundException;
-import com.geovannycode.nisum.domain.UserRegistrationException;
-import com.geovannycode.nisum.domain.UserRetrievalException;
+import com.geovannycode.nisum.domain.dto.CreateUserResponse;
 import com.geovannycode.nisum.domain.model.ApiError;
-import com.geovannycode.nisum.domain.model.CreateUserResponse;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;

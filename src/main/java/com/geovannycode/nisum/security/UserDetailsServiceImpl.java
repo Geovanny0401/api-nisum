@@ -1,7 +1,7 @@
 package com.geovannycode.nisum.security;
 
-import com.geovannycode.nisum.domain.UserEntity;
-import com.geovannycode.nisum.domain.UserRepository;
+import com.geovannycode.nisum.domain.entities.UserEntity;
+import com.geovannycode.nisum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

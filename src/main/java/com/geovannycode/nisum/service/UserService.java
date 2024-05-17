@@ -1,9 +1,16 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.service;
 
-import com.geovannycode.nisum.domain.model.CreateUserRequest;
-import com.geovannycode.nisum.domain.model.CreateUserResponse;
-import com.geovannycode.nisum.domain.model.Role;
-import com.geovannycode.nisum.domain.model.UserDTO;
+import com.geovannycode.nisum.domain.dto.CreateUserRequest;
+import com.geovannycode.nisum.domain.dto.CreateUserResponse;
+import com.geovannycode.nisum.domain.dto.UserDTO;
+import com.geovannycode.nisum.domain.entities.UserEntity;
+import com.geovannycode.nisum.domain.enums.Role;
+import com.geovannycode.nisum.domain.mapper.UserMapper;
+import com.geovannycode.nisum.exception.EmailAlreadyExistsException;
+import com.geovannycode.nisum.exception.InvalidPasswordFormatException;
+import com.geovannycode.nisum.exception.ResourceNotFoundException;
+import com.geovannycode.nisum.exception.UserRegistrationException;
+import com.geovannycode.nisum.repository.UserRepository;
 import com.geovannycode.nisum.security.jwt.TokenProvider;
 import java.util.Collections;
 import java.util.List;
@@ -44,14 +51,8 @@ public class UserService {
     }
 
     public List<UserDTO> getAll() {
-        try {
-            return userRepository.findAll().stream()
-                    .map(UserMapper::convertToDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            log.error("Error al obtener todos los usuarios: {}", ex.getMessage(), ex);
-            throw new UserRetrievalException("Error al obtener todos los usuarios", ex);
-        }
+        log.info("consulta de usuarios iniciada");
+        return userRepository.findAll().stream().map(UserMapper::convertToDTO).collect(Collectors.toList());
     }
 
     public CreateUserResponse createUser(CreateUserRequest user, Role role) {

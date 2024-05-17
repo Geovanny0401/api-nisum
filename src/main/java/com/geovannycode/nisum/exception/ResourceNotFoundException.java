@@ -1,4 +1,4 @@
-package com.geovannycode.nisum.domain;
+package com.geovannycode.nisum.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

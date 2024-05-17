@@ -1,10 +1,15 @@
-package com.geovannycode.nisum.controller.web;
+package com.geovannycode.nisum.controller;
 
-import com.geovannycode.nisum.domain.UserService;
-import com.geovannycode.nisum.domain.model.CreateUserRequest;
-import com.geovannycode.nisum.domain.model.CreateUserResponse;
+import com.geovannycode.nisum.domain.dto.CreateUserRequest;
+import com.geovannycode.nisum.domain.dto.CreateUserResponse;
+import com.geovannycode.nisum.domain.dto.UserDTO;
 import com.geovannycode.nisum.domain.model.TokenBodyResponse;
-import com.geovannycode.nisum.domain.model.UserDTO;
+import com.geovannycode.nisum.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.slf4j.Logger;
@@ -33,6 +38,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Operation(
+            summary = "Ver una lista de usuarios disponibles",
+            description = "Recupera una lista de usuarios disponibles.")
+    @ApiResponses(
+            value = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Lista recuperada exitosamente",
+                        content = @Content(schema = @Schema(implementation = CreateUserResponse.class))),
+                @ApiResponse(responseCode = "401", description = "No autorizado para ver la lista de usuarios"),
+                @ApiResponse(responseCode = "403", description = "Acceso prohibido para ver la lista de usuarios"),
+                @ApiResponse(responseCode = "404", description = "Lista de usuarios no encontrada"),
+            })
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CreateUserResponse<List<UserDTO>>> getAll() {
@@ -43,6 +61,8 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "Creacion de Usuario", description = "Crea un nuevo usuario.")
+    @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente")
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
@@ -50,6 +70,10 @@ public class UserController {
         return new ResponseEntity<>(userService.createUser(request, request.role()), HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Autenticar a un usuario y devolver un token",
+            description = "Autentica al usuario y proporciona un token")
+    @ApiResponse(responseCode = "200", description = "Inicio de sesion satisfactoria")
     @PostMapping(value = "/authenticate")
     public ResponseEntity<CreateUserResponse<TokenBodyResponse>> authenticate(@RequestBody CreateUserRequest request) {
         log.info("Autenticación de usuario : {}", request);
