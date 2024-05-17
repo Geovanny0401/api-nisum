@@ -68,20 +68,6 @@ Este comando activará las definiciones especificadas en Taskfile.yml, que puede
 ### Arquitectura "Package by Component"
 La arquitectura "Package by Component" es una estrategia de organización de código fuente en la que se agrupan las clases y otros recursos según su funcionalidad específica o componente, en lugar de por capas (como modelo, vista, controlador). En este proyecto, se adoptó este enfoque para mejorar la modularidad y la mantenibilidad del código. A continuación, se describen las ventajas de esta estructura:
 
-## Estructura del Proyecto
-La estructura del proyecto en el diagrama adjunto refleja claramente la organización por componentes:
-
-* **Web**: Contiene los controladores, en este caso UserController, que maneja las solicitudes HTTP y comunica la web con los servicios de usuario.
-* **Domain**: Agrupa la lógica de negocio principal, incluyendo:
-* * **UserService**: Servicio que contiene la lógica para manejar los datos de los usuarios.
-* * **UserRepository**: Repositorio que proporciona los métodos para la persistencia de datos de los usuarios, interactuando directamente con la base de datos.
-
-### Conexión con la Base de Datos
-* **Database**: Representa la base de datos que almacena toda la información gestionada por los componentes del sistema. `UserRepository` interactúa directamente con esta base de datos, facilitando la creación, consulta, actualización y eliminación de datos de usuario.
-
-<img width="1221" alt="Captura de pantalla 2024-05-03 a las 11 12 27 a  m" src="https://github.com/Geovanny0401/api-nisum/assets/10421376/3e88f35d-b921-4f5e-8968-d8a827ab0a4b">
-
-
 ## Diagrama de Secuencia 
 
 ```mermaid
